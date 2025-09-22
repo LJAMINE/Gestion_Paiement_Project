@@ -4,23 +4,23 @@ import java.util.ArrayList;
 
 public class Departement {
 
-    private String idDepartement;
+    private int idDepartement;
     private String nom;
     private Agent responsable;
     private ArrayList<Agent> agents;
 
-    public Departement(String idDepartement, String nom, Agent responsable) {
+    public Departement(int idDepartement, String nom, Agent responsable) {
         this.idDepartement = idDepartement;
         this.nom = nom;
         this.responsable = responsable;
         this.agents = new ArrayList<>();
     }
 
-    public String getIdDepartement() {
+    public int getIdDepartement() {
         return idDepartement;
     }
 
-    public void setIdDepartement(String idDepartement) {
+    public void setIdDepartement(int idDepartement) {
         this.idDepartement = idDepartement;
     }
 

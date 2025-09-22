@@ -1,0 +1,35 @@
+-- -- 1. Departement
+-- CREATE TABLE Departement (
+--                              idDepartement VARCHAR(20) PRIMARY KEY,
+--                              nom VARCHAR(100) NOT NULL,
+--                              responsable_id INT
+-- );
+--
+-- -- 2. Agent
+-- CREATE TABLE Agent (
+--                        idAgent INT PRIMARY KEY AUTO_INCREMENT,
+--                        name VARCHAR(100) NOT NULL,
+--                        prenom VARCHAR(100) NOT NULL,
+--                        email VARCHAR(150) UNIQUE NOT NULL,
+--                        motDePasse VARCHAR(100) NOT NULL,
+--                        typeAgent ENUM('OUVRIER', 'RESPONSABLE_DEPARTEMENT', 'DIRECTEUR', 'STAGIAIRE') NOT NULL,
+--                        departement_id INT,
+--                        FOREIGN KEY (departement_id) REFERENCES Departement(idDepartement)
+-- );
+--
+-- -- 3. Add FK in Departement
+-- ALTER TABLE Departement
+--     ADD CONSTRAINT fk_responsable
+--         FOREIGN KEY (responsable_id) REFERENCES Agent(idAgent);
+--
+-- -- 4. Paiement
+-- CREATE TABLE Paiement (
+--                           idPaiement INT PRIMARY KEY AUTO_INCREMENT,
+--                           typePaiement ENUM('SALAIRE', 'PRIME', 'BONUS', 'INDEMNITE') NOT NULL,
+--                           montant DECIMAL(10,2) NOT NULL,
+--                           date DATE NOT NULL,
+--                           motif VARCHAR(255),
+--                           conditionValidee BOOLEAN DEFAULT NULL,
+--                           agent_id INT NOT NULL,
+--                           FOREIGN KEY (agent_id) REFERENCES Agent(idAgent)
+-- );
