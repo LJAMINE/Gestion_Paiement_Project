@@ -2,17 +2,49 @@ package Model;
 
 import java.util.ArrayList;
 
-public class Departement extends Person {
+public class Departement {
 
-    public int idDepartement;
-    public String nom;
-    ArrayList<Agent> stockAgents;
-//    responsable (Agent)
+    private String idDepartement;
+    private String nom;
+    private Agent responsable;
+    private ArrayList<Agent> agents;
 
-    public Departement(String name, String prénom, String email, String motDePasse, int idDepartement, String nom) {
-        super(name, prénom, email, motDePasse);
+    public Departement(String idDepartement, String nom, Agent responsable) {
         this.idDepartement = idDepartement;
         this.nom = nom;
-        this.stockAgents = new ArrayList<>();
+        this.responsable = responsable;
+        this.agents = new ArrayList<>();
+    }
+
+    public String getIdDepartement() {
+        return idDepartement;
+    }
+
+    public void setIdDepartement(String idDepartement) {
+        this.idDepartement = idDepartement;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public Agent getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(Agent responsable) {
+        this.responsable = responsable;
+    }
+
+    public ArrayList<Agent> getAgents() {
+        return agents;
+    }
+
+    public void setAgents(ArrayList<Agent> agents) {
+        this.agents = agents;
     }
 }
