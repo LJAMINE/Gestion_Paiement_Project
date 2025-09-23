@@ -1,14 +1,13 @@
 package DAO;
 
 import Model.Agent;
- import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Types;
+import Model.TypeAgent;
+
+import java.sql.*;
 
 public class AgentDAO {
-    public void addAgent(Agent agent){
-        String sql="INSERT INTO agent (name, prenom, email, motDePasse, typeAgent, departement_id) VALUES (?, ?, ?, ?, ?, ?)";
+    public void addAgent(Agent agent) {
+        String sql = "INSERT INTO agent (name, prenom, email, motDePasse, typeAgent, departement_id) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -26,5 +25,30 @@ public class AgentDAO {
         } catch (SQLException e) {
             e.printStackTrace(); // Or handle with a custom exception
         }
+    }
+
+    public Agent getgetAgentByEmailAndPassword(String email, String password) throws SQLException {
+        String sql = "SELECT * FROM agent WHERE email = ? AND motDePasse = ?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, email);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                Agent agent = new Agent();
+                agent.setIdAgent(rs.getInt("idAgent"));
+                agent.setName(rs.getString("name"));
+                agent.setPrenom(rs.getString("prenom"));
+                agent.setEmail(rs.getString("email"));
+                agent.setMotDePasse(rs.getString("motDePasse"));
+                agent.setTypeAgent(TypeAgent.valueOf(rs.getString("typeAgent")));
+                return agent;
+            }
+        }
+        return null;
+
     }
 }

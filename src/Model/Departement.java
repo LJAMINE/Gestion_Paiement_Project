@@ -9,6 +9,9 @@ public class Departement {
     private Agent responsable;
     private ArrayList<Agent> agents;
 
+    public Departement(){
+
+    }
     public Departement(int idDepartement, String nom, Agent responsable) {
         this.idDepartement = idDepartement;
         this.nom = nom;
