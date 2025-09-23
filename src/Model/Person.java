@@ -22,11 +22,11 @@ abstract public class Person {
         this.name = name;
     }
 
-    public String getPrénom() {
+    public String getPrenom() {
         return prenom;
     }
 
-    public void setPrénom(String prenom) {
+    public void setPrenom(String prenom) {
         this.prenom = prenom;
     }
 
