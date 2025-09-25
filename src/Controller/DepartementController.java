@@ -11,9 +11,9 @@ public class DepartementController {
         this.departementService=departementService;
     }
 
-    public void addDepartement(Departement departement, Agent currentUser){
+    public void addDepartement(Departement departement){
         try {
-            departementService.addDepartement(departement,currentUser);
+            departementService.addDepartement(departement);
             System.out.println("Departement added successfully");
 
         } catch (Exception e) {

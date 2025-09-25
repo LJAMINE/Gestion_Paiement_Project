@@ -26,6 +26,7 @@ public class Agent extends Person {
         return idAgent;
     }
 
+
     public void setIdAgent(int idAgent) {
         this.idAgent = idAgent;
     }

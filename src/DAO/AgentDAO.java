@@ -6,6 +6,9 @@ import Model.TypeAgent;
 import java.sql.*;
 
 public class AgentDAO {
+
+
+
     public void addAgent(Agent agent) {
         String sql = "INSERT INTO agent (name, prenom, email, motDePasse, typeAgent, departement_id) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -28,6 +31,7 @@ public class AgentDAO {
     }
 
     public Agent getgetAgentByEmailAndPassword(String email, String password) throws SQLException {
+
         String sql = "SELECT * FROM agent WHERE email = ? AND motDePasse = ?";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {

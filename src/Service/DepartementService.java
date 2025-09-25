@@ -14,12 +14,7 @@ public class DepartementService {
         this.departementRepository = departementRepository;
     }
 
-    public void addDepartement(Departement departement, Agent currentUser) throws Exception {
-        if (currentUser.getTypeAgent() != TypeAgent.DIRECTEUR) {
-            throw new Exception("Only Directors can create department");
-
-        }
-
+    public void addDepartement(Departement departement) throws Exception {
         departementRepository.addDepartement(departement);
     }
 

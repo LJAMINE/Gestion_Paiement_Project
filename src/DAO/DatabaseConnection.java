@@ -23,7 +23,7 @@ public class DatabaseConnection {
 //        return instance;
 //    }
 //
-//    public Connection getConnection() {
+//    public static Connection getConnection() {
 //        return connection;
 //    }
 
@@ -44,7 +44,7 @@ public class DatabaseConnection {
         // Always return a NEW connection, never reuse!
         String url = "jdbc:mysql://localhost:3306/gestion_paiement_project";
         String user = "root";
-        String password = ""; // Or your password
+        String password = "";
         return DriverManager.getConnection(url, user, password);
     }
 }

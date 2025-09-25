@@ -55,20 +55,12 @@ public class DepartementMenu {
         System.out.print("Departement name: ");
         String name = scanner.nextLine();
 
-        System.out.print("id de responsable assigned: ");
-        int respId = scanner.nextInt();
-        Agent responsable=null;
 
-        if (respId!=0){
-            responsable=new Agent();
-            responsable.setIdAgent(respId);
-        }
 
         Departement departement=new Departement();
         departement.setNom(name);
-        departement.setResponsable(responsable);
 
-        controller.addDepartement(departement, currentUser);
+        controller.addDepartement(departement);
 
     }
 }

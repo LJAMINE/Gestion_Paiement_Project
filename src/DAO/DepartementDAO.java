@@ -10,15 +10,11 @@ import java.util.List;
 public class DepartementDAO {
     public void addDepartement(Departement departement ) throws SQLException {
 
-        String sql="INSERT INTO departement (nom, responsable_id) VALUES (?,?)";
+        String sql="INSERT INTO departement (nom) VALUES (?)";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, departement.getNom());
-            if (departement.getResponsable() != null) {
-                ps.setInt(2, departement.getResponsable().getIdAgent());
-            } else {
-                ps.setNull(2, Types.INTEGER);
-            }
+
             ps.executeUpdate();
         }
 
