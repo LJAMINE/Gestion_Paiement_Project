@@ -35,10 +35,19 @@ public class DepartementController {
 
     public List<Departement> getAllDepartements() {
         try {
-          return   departementService.getAllDepartements();
-         } catch (Exception e) {
+            return departementService.getAllDepartements();
+        } catch (Exception e) {
             System.out.println("error in getAllDepartements ");
             return new ArrayList<>();
+        }
+    }
+
+    public void updateDepartement(Departement departement) {
+        try {
+            departementService.updateDepartement(departement);
+            System.out.println("updated successfully");
+        } catch (Exception e) {
+            System.out.println("error in update");
         }
     }
 

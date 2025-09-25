@@ -58,6 +58,20 @@ public class DepartementDAO {
             ps.setInt(1, idDepartement);
             ps.executeUpdate();
         }
+    }
+
+
+
+    public void updateDepartement (Departement departement) throws SQLException {
+        String sql= "UPDATE departement SET nom=? WHERE idDepartement=?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, departement.getNom());
+            ps.setInt(2, departement.getIdDepartement());
+            ps.executeUpdate();
         }
 
     }
+
+
+}

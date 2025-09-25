@@ -7,7 +7,7 @@ import java.util.List;
 
 public class DepartementRepositoryImpl implements DepartementRepository {
 
-    private DepartementDAO departementDAO =new DepartementDAO();
+    private DepartementDAO departementDAO = new DepartementDAO();
 
 
     @Override
@@ -29,4 +29,11 @@ public class DepartementRepositoryImpl implements DepartementRepository {
     public void deleteDepartement(int idDepartement) throws Exception {
         departementDAO.deleteDepartement(idDepartement);
     }
+
+    @Override
+    public void updateDepartement(Departement departement) throws Exception {
+        departementDAO.updateDepartement(departement);
+    }
+
+
 }

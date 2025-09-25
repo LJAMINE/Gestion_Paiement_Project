@@ -52,15 +52,15 @@ public class DepartementMenu {
                 new DepartementService(new DepartementRepositoryImpl())
         );
 
-        boolean directorRun =true;
+        boolean directorRun = true;
 
-        while(directorRun){
+        while (directorRun) {
 
             System.out.println("\ndepartement Menu :");
             System.out.println("1. create");
             System.out.println("2. delete");
-            System.out.println("3. modify");
-            System.out.println("4. list All departement");
+            System.out.println("3. update Departement");
+            System.out.println("4. get All Departements");
             System.out.println("0. Quitter");
 
             int choix = scanner.nextInt();
@@ -72,7 +72,7 @@ public class DepartementMenu {
                     System.out.print("Departement name: ");
                     String name = scanner.nextLine();
 
-                    Departement departement=new Departement();
+                    Departement departement = new Departement();
                     departement.setNom(name);
 
                     controller.addDepartement(departement);
@@ -84,24 +84,40 @@ public class DepartementMenu {
                     controller.deleteDepartement(id);
                     break;
                 case 3:
-                    break;
-                case 4:
-                    System.out.println("4. list All departement");
-                    List<Departement> departementss=controller.getAllDepartements();
-                    for (Departement dep : departementss){
-                        System.out.println(dep.getIdDepartement()+ "  " +dep.getNom());
-                    }
+                    System.out.println("3. updateDepartement");
+
+                    System.out.println("id to be updated ");
+                    int idupdated = scanner.nextInt();
+
+                    scanner.nextLine();
+
+                    System.out.println("nom to be updated ");
+                    String newNom = scanner.nextLine();
+
+                    Departement departementUpdated = new Departement();
+                    departementUpdated.setIdDepartement(idupdated);
+                    departementUpdated.setNom(newNom);
+
+                    controller.updateDepartement(departementUpdated);
+
 
                     break;
+                case 4:
+                    System.out.println("4. get All Departements");
+                    List<Departement> departementss = controller.getAllDepartements();
+                    for (Departement dep : departementss) {
+                        System.out.println(dep.getIdDepartement() + "  " + dep.getNom());
+                    }
+                    break;
                 case 0:
-                    directorRun=false; break;
+                    directorRun = false;
+                    break;
 
                 default:
                     System.out.println("not found ");
             }
 
-    }
-
+        }
 
 
     }

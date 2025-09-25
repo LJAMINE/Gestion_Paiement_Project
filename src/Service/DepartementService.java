@@ -26,7 +26,12 @@ public class DepartementService {
         return departementRepository.getAllDepartements();
     }
 
-    public void deleteDepartement(int idDepartement)throws Exception{
+    public void deleteDepartement(int idDepartement) throws Exception {
         departementRepository.deleteDepartement(idDepartement);
     }
+
+    public void updateDepartement(Departement departement) throws Exception {
+        departementRepository.updateDepartement(departement);
+    }
+
 }
