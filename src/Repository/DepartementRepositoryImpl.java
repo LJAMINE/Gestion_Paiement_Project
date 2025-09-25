@@ -24,4 +24,9 @@ public class DepartementRepositoryImpl implements DepartementRepository {
     public List<Departement> getAllDepartements() throws Exception {
         return departementDAO.getAllDepartements();
     }
+
+    @Override
+    public void deleteDepartement(int idDepartement) throws Exception {
+        departementDAO.deleteDepartement(idDepartement);
+    }
 }

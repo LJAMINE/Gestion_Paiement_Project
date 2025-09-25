@@ -7,17 +7,26 @@ import Service.DepartementService;
 public class DepartementController {
     private DepartementService departementService;
 
-    public DepartementController(DepartementService departementService){
-        this.departementService=departementService;
+    public DepartementController(DepartementService departementService) {
+        this.departementService = departementService;
     }
 
-    public void addDepartement(Departement departement){
+    public void addDepartement(Departement departement) {
         try {
             departementService.addDepartement(departement);
             System.out.println("Departement added successfully");
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void deleteDepartement(int idDepartement) throws Exception {
+        try {
+            departementService.deleteDepartement(idDepartement);
+            System.out.println("Departement deleted successfully");
+        } catch (Exception e) {
+            System.out.println("Error deleting departement: " + e.getMessage());
         }
     }
 }

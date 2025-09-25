@@ -11,7 +11,7 @@ import Service.DepartementService;
 import java.util.Scanner;
 
 public class DepartementMenu {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         AgentDAO agentDAO = new AgentDAO();
 
@@ -51,16 +51,51 @@ public class DepartementMenu {
                 new DepartementService(new DepartementRepositoryImpl())
         );
 
-        System.out.println("  Create Departement (Director only) ===");
-        System.out.print("Departement name: ");
-        String name = scanner.nextLine();
+        boolean directorRun =true;
+
+        while(directorRun){
+
+            System.out.println("\ndepartement Menu :");
+            System.out.println("1. create");
+            System.out.println("2. delete");
+            System.out.println("0. Quitter");
+
+            int choix = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choix) {
+                case 1:
+                    System.out.println("  Create Departement (Director only) ===");
+                    System.out.print("Departement name: ");
+                    String name = scanner.nextLine();
+
+                    Departement departement=new Departement();
+                    departement.setNom(name);
+
+                    controller.addDepartement(departement);
+                    break;
+                case 2:
+                    System.out.print("delete Departement  : ");
+                    System.out.print("Departement id: ");
+                    int id = scanner.nextInt();
+                    controller.deleteDepartement(id);
 
 
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 0:
+                    directorRun=false; break;
 
-        Departement departement=new Departement();
-        departement.setNom(name);
+                default:
+                    System.out.println("not found ");
+            }
 
-        controller.addDepartement(departement);
+    }
+
+
 
     }
 }

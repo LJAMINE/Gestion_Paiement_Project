@@ -11,4 +11,6 @@ public interface DepartementRepository {
     Departement getDepartementById(int id) throws Exception;
 
     List<Departement> getAllDepartements() throws Exception;
+
+    void deleteDepartement(int idDepartement)throws  Exception;
 }
