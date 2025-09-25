@@ -27,7 +27,7 @@ public class DepartementDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Departement dpt = new Departement(rs.getInt("idDepartement"), rs.getString("nom"), null);
+                Departement dpt = new Departement(rs.getInt("idDepartement"), rs.getString("nom"));
                 return dpt;
             }
         }
@@ -43,7 +43,7 @@ public class DepartementDAO {
              Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                Departement dpt = new Departement(rs.getInt("idDepartement "), rs.getString("nom"), null);
+                Departement dpt = new Departement(rs.getInt("idDepartement"), rs.getString("nom"));
                 list.add(dpt);
             }
         }

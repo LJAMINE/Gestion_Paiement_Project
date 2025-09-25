@@ -8,6 +8,7 @@ import Model.TypeAgent;
 import Repository.DepartementRepositoryImpl;
 import Service.DepartementService;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class DepartementMenu {
@@ -58,6 +59,8 @@ public class DepartementMenu {
             System.out.println("\ndepartement Menu :");
             System.out.println("1. create");
             System.out.println("2. delete");
+            System.out.println("3. modify");
+            System.out.println("4. list All departement");
             System.out.println("0. Quitter");
 
             int choix = scanner.nextInt();
@@ -79,12 +82,16 @@ public class DepartementMenu {
                     System.out.print("Departement id: ");
                     int id = scanner.nextInt();
                     controller.deleteDepartement(id);
-
-
                     break;
                 case 3:
                     break;
                 case 4:
+                    System.out.println("4. list All departement");
+                    List<Departement> departementss=controller.getAllDepartements();
+                    for (Departement dep : departementss){
+                        System.out.println(dep.getIdDepartement()+ "  " +dep.getNom());
+                    }
+
                     break;
                 case 0:
                     directorRun=false; break;

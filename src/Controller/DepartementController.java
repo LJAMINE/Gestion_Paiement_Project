@@ -4,6 +4,9 @@ import Model.Agent;
 import Model.Departement;
 import Service.DepartementService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DepartementController {
     private DepartementService departementService;
 
@@ -29,4 +32,15 @@ public class DepartementController {
             System.out.println("Error deleting departement: " + e.getMessage());
         }
     }
+
+    public List<Departement> getAllDepartements() {
+        try {
+          return   departementService.getAllDepartements();
+         } catch (Exception e) {
+            System.out.println("error in getAllDepartements ");
+            return new ArrayList<>();
+        }
+    }
+
+
 }

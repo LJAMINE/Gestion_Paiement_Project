@@ -12,11 +12,10 @@ public class Departement {
     public Departement(){
 
     }
-    public Departement(int idDepartement, String nom, Agent responsable) {
+    public Departement(int idDepartement, String nom) {
         this.idDepartement = idDepartement;
         this.nom = nom;
-        this.responsable = responsable;
-        this.agents = new ArrayList<>();
+         this.agents = new ArrayList<>();
     }
 
     public int getIdDepartement() {
