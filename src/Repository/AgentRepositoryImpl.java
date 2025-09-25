@@ -15,6 +15,11 @@ public class AgentRepositoryImpl implements AgentRepository {
         agentDAO.addAgent(agent);
     }
 
+    @Override
+    public List<Agent> getAgentsByDepartement(int departementId)throws Exception {
+        return agentDAO.getAgentsByDepartement(departementId);
+    }
+
 //    @Override
 //    public void updateAgent(Agent agent) {
 //        agentDAO.updateAgent(agent);

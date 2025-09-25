@@ -7,6 +7,8 @@ import java.util.List;
 public interface AgentRepository {
 
     void addAgent(Agent agent);
+    List<Agent>getAgentsByDepartement (int departementId ) throws Exception;
+
 //    void updateAgent(Agent agent);
 //    void deleteAgent(int idAgent);
 //    Agent findById(int idAgent);

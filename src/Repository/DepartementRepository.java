@@ -18,4 +18,5 @@ public interface DepartementRepository {
     void deleteDepartement(int idDepartement)throws  Exception;
 
     void updateDepartement(Departement departement)throws Exception;
+
 }

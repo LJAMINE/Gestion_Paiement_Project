@@ -4,9 +4,10 @@ import Model.Agent;
 import Model.TypeAgent;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AgentDAO {
-
 
 
     public void addAgent(Agent agent) {
@@ -50,6 +51,29 @@ public class AgentDAO {
             }
         }
         return null;
+
+    }
+
+    public List<Agent> getAgentsByDepartement(int departementId) throws SQLException {
+        List<Agent> agents = new ArrayList<>();
+        String sql = "SELECT * FROM agent WHERE departement_id = ?";
+
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, departementId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Agent agent = new Agent();
+                agent.setIdAgent(rs.getInt("idAgent"));
+                agent.setName(rs.getString("name"));
+                agent.setPrenom(rs.getString("prenom"));
+                agent.setEmail(rs.getString("email"));
+                agent.setMotDePasse(rs.getString("motDePasse"));
+                agent.setTypeAgent(TypeAgent.valueOf(rs.getString("typeAgent")));
+                agents.add(agent);
+            }
+        }
+        return agents;
 
     }
 }
