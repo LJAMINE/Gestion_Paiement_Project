@@ -100,7 +100,6 @@ public class DepartementMenu {
 
                     controller.updateDepartement(departementUpdated);
 
-
                     break;
                 case 4:
                     System.out.println("4. get All Departements");

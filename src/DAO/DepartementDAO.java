@@ -36,6 +36,22 @@ public class DepartementDAO {
 
     }
 
+    public Departement getDepartementByName(String name) throws SQLException {
+        String sql = "SELECT * FROM departement WHERE nom=?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Departement dpt = new Departement(rs.getInt("idDepartement"), rs.getString("nom"));
+                return dpt;
+            }
+        }
+
+        return null;
+
+    }
+
     public List<Departement> getAllDepartements() throws SQLException {
         List<Departement> list = new ArrayList<>();
         String sql = "SELECT * FROM departement";

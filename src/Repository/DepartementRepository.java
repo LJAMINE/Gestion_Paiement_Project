@@ -10,6 +10,9 @@ public interface DepartementRepository {
 
     Departement getDepartementById(int id) throws Exception;
 
+    Departement getDepartementByName(String name) throws Exception;
+
+
     List<Departement> getAllDepartements() throws Exception;
 
     void deleteDepartement(int idDepartement)throws  Exception;

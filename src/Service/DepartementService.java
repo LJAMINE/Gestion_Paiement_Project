@@ -22,6 +22,11 @@ public class DepartementService {
         return departementRepository.getDepartementById(id);
     }
 
+    public Departement getDepartementByName(String name) throws Exception {
+        return departementRepository.getDepartementByName(name);
+    }
+
+
     public List<Departement> getAllDepartements() throws Exception {
         return departementRepository.getAllDepartements();
     }

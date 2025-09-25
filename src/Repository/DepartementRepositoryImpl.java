@@ -21,6 +21,11 @@ public class DepartementRepositoryImpl implements DepartementRepository {
     }
 
     @Override
+    public Departement getDepartementByName(String name) throws Exception {
+        return departementDAO.getDepartementByName(name);
+    }
+
+    @Override
     public List<Departement> getAllDepartements() throws Exception {
         return departementDAO.getAllDepartements();
     }
