@@ -59,7 +59,9 @@ public class AgentDAO {
         String sql = "SELECT * FROM agent WHERE departement_id = ?";
 
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql))
+
+        {
             ps.setInt(1, departementId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -75,5 +77,23 @@ public class AgentDAO {
         }
         return agents;
 
+    }
+
+    public  void  updateAgent (Agent agent)throws SQLException{
+        String sql="UPDATE agent SET name = ?, prenom = ?, email = ?, motDePasse = ?, typeAgent = ?, departement_id = ? WHERE idAgent = ?\n ";
+        try  (Connection conn = DatabaseConnection.getInstance().getConnection() ;
+        PreparedStatement ps=conn.prepareStatement(sql)
+        ){
+            ps.setString(1,agent.getName());
+            ps.setString(2,agent.getPrenom());
+            ps.setString(3,agent.getEmail());
+            ps.setString(4,agent.getMotDePasse());
+            ps.setString(5,agent.getTypeAgent().name());
+            ps.setInt(6, agent.getDepartement().getIdDepartement());
+            ps.setInt(7, agent.getIdAgent());
+
+
+            ps.executeUpdate();
+        }
     }
 }

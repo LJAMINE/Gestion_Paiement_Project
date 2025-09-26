@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
- 
+
 
     private static DatabaseConnection instance;
 
@@ -20,7 +20,6 @@ public class DatabaseConnection {
     }
 
     public Connection getConnection() throws SQLException {
-        // Always return a NEW connection, never reuse!
         String url = "jdbc:mysql://localhost:3306/gestion_paiement_project";
         String user = "root";
         String password = "";

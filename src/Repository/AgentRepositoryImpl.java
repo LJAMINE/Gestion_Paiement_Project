@@ -3,6 +3,7 @@ package Repository;
 import DAO.AgentDAO;
 import Model.Agent;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class AgentRepositoryImpl implements AgentRepository {
@@ -20,10 +21,10 @@ public class AgentRepositoryImpl implements AgentRepository {
         return agentDAO.getAgentsByDepartement(departementId);
     }
 
-//    @Override
-//    public void updateAgent(Agent agent) {
-//        agentDAO.updateAgent(agent);
-//    }
+    @Override
+    public void updateAgent(Agent agent)throws Exception {
+        agentDAO.updateAgent(agent);
+    }
 //
 //    @Override
 //    public void deleteAgent(int idAgent) {

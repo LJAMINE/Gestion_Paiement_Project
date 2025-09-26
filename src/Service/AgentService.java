@@ -24,9 +24,12 @@ public class AgentService {
             }
         }
         agentRepository.addAgent(agent);
-
-
     }
+
+    public void updateAgent(Agent agent)throws Exception{
+        agentRepository.updateAgent(agent);
+    }
+
 
 
 }
