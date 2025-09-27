@@ -10,9 +10,9 @@ public interface AgentRepository {
     List<Agent>getAgentsByDepartement (int departementId ) throws Exception;
 
     void updateAgent(Agent agent)throws Exception;
-//    void deleteAgent(int idAgent);
+    void deleteAgent(int idAgent) throws Exception;
+    List<Agent> getAllAgents()throws Exception;
 //    Agent findById(int idAgent);
-//    List<Agent> findAll();
 //    List<Agent>findByType(String typeAgent);
 
 }

@@ -4,6 +4,8 @@ import Model.Agent;
 import Model.Departement;
 import Service.AgentService;
 
+import java.util.List;
+
 public class AgentController {
     private AgentService agentService;
 
@@ -23,11 +25,30 @@ public class AgentController {
     public void updateAgent(Agent agent) {
 
         try {
-               agentService.updateAgent(agent);
+            agentService.updateAgent(agent);
             System.out.println("updated successfully");
 
         } catch (Exception e) {
-            System.out.println("updated issue "+e.getMessage());
+            System.out.println("updated issue " + e.getMessage());
+        }
+    }
+
+    public void deleteAgent(int idAgent) {
+        try {
+            agentService.deleteAgent(idAgent);
+            System.out.println("deleted successfully");
+
+        } catch (Exception e) {
+            System.out.println("deleted issue " + e.getMessage());
+        }
+    }
+
+
+    public List<Agent> getAllAgents(){
+        try{
+          return   agentService.getAllAgents();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

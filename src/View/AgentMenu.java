@@ -81,6 +81,9 @@ public class AgentMenu {
                     break;
                 case 2:
                     System.out.print("delete agent  : ");
+                    System.out.println("id of agent to be deleted ");
+                    int id=scanner.nextInt();
+                    controller.deleteAgent(id);
 
                     break;
                 case 3:
@@ -107,13 +110,9 @@ public class AgentMenu {
                     String type = scanner.nextLine();
                     TypeAgent typeAgents = TypeAgent.valueOf(type);
 
-                    System.out.println("Enter new department name:");
-                    String departementNames = scanner.nextLine();
-                    Departement departements = departementService.getDepartementByName(departementNames);
-                    if (departements == null) {
-                        System.out.println("Department not found");
-                        return;
-                    }
+
+
+
 
 
                     Agent agentUpdated = new Agent();
@@ -124,7 +123,6 @@ public class AgentMenu {
                     agentUpdated.setEmail(newEmail);
                     agentUpdated.setMotDePasse(newPassword);
                     agentUpdated.setTypeAgent(typeAgents);
-                    agentUpdated.setDepartement(departements);
 
 
 
@@ -134,6 +132,16 @@ public class AgentMenu {
                     break;
                 case 4:
                     System.out.println("4. get All Agent");
+                    List<Agent> list=controller.getAllAgents();
+
+
+                    for (Agent a : list) {
+                        System.out.println(
+                                "Email: " + a.getEmail() +
+                                        ", Department: " + a.getDepartement().getNom() +
+                                        ", Department ID: " + a.getDepartement().getIdDepartement()
+                        );
+                    }
 
                     break;
                 case 0:

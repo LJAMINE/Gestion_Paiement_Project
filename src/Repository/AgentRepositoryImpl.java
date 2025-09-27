@@ -25,21 +25,24 @@ public class AgentRepositoryImpl implements AgentRepository {
     public void updateAgent(Agent agent)throws Exception {
         agentDAO.updateAgent(agent);
     }
-//
-//    @Override
-//    public void deleteAgent(int idAgent) {
-//        agentDAO.deleteAgent(idAgent);
-//    }
+
+    @Override
+    public void deleteAgent(int idAgent)throws Exception {
+        agentDAO.deleteAgent(idAgent);
+    }
+
+    @Override
+    public List<Agent> getAllAgents() throws Exception{
+        return  agentDAO.getAllAgents();
+    }
+
 //
 //    @Override
 //    public Agent findById(int idAgent) {
 //        return agentDAO.getAgentById(idAgent);
 //    }
 //
-//    @Override
-//    public List<Agent> findAll() {
-//        return agentDAO.getAllAgents() ;
-//    }
+
 //
 //    @Override
 //    public List<Agent> findByType(String typeAgent) {

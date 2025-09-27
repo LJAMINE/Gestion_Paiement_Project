@@ -26,10 +26,15 @@ public class AgentService {
         agentRepository.addAgent(agent);
     }
 
-    public void updateAgent(Agent agent)throws Exception{
+    public void updateAgent(Agent agent) throws Exception {
         agentRepository.updateAgent(agent);
     }
 
+    public void deleteAgent(int idAgent) throws Exception {
+        agentRepository.deleteAgent(idAgent);
+    }
 
-
+    public List<Agent> getAllAgents() throws Exception {
+        return agentRepository.getAllAgents();
+    }
 }

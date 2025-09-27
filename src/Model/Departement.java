@@ -49,4 +49,9 @@ public class Departement {
     public void setAgents(ArrayList<Agent> agents) {
         this.agents = agents;
     }
+
+    @Override
+    public String toString() {
+        return "Departement{id=" + idDepartement + ", name='" + nom + "'}";
+    }
 }
