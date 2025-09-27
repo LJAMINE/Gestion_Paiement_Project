@@ -3,7 +3,7 @@ package DAO;
 import Model.Agent;
 import Model.Departement;
 import Model.TypeAgent;
-
+import Exception.DataAccessException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,18 +14,19 @@ public class AgentDAO {
     public void addAgent(Agent agent) {
         String sql = "INSERT INTO agent (name, prenom, email, motDePasse, typeAgent, departement_id) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, agent.getName());
-            ps.setString(2, agent.getPrenom());
-            ps.setString(3, agent.getEmail());
-            ps.setString(4, agent.getMotDePasse());
-            ps.setString(5, agent.getTypeAgent().name());
-            ps.setInt(6, agent.getDepartement().getIdDepartement());
+             try (Connection conn = DatabaseConnection.getInstance().getConnection();
+                 PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, agent.getName());
+                ps.setString(2, agent.getPrenom());
+                ps.setString(3, agent.getEmail());
+                ps.setString(4, agent.getMotDePasse());
+                ps.setString(5, agent.getTypeAgent().name());
+                ps.setInt(6, agent.getDepartement().getIdDepartement());
 
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
+                ps.executeUpdate();
+            }
+         catch (SQLException  e) {
+            throw new DataAccessException("Failed to add agent", e);
         }
     }
 
@@ -50,8 +51,10 @@ public class AgentDAO {
                 agent.setTypeAgent(TypeAgent.valueOf(rs.getString("typeAgent")));
                 return agent;
             }
-        }
         return null;
+        } catch (SQLException  e) {
+            throw new DataAccessException("Failed to fetch agent by email and password", e);
+        }
 
     }
 
@@ -73,8 +76,10 @@ public class AgentDAO {
                 agent.setTypeAgent(TypeAgent.valueOf(rs.getString("typeAgent")));
                 agents.add(agent);
             }
-        }
         return agents;
+        }catch (SQLException  e) {
+            throw new DataAccessException("Failed to fetch agent by departement", e);
+        }
 
     }
 
@@ -92,6 +97,8 @@ public class AgentDAO {
 
 
             ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException("Failed  to update agent ", e);
         }
     }
 
@@ -101,6 +108,8 @@ public class AgentDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, idAgent);
             ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException("Failed to delete  agent", e);
         }
     }
 
@@ -133,7 +142,10 @@ public class AgentDAO {
             }
 
 
-        }
             return agents;
+        } catch (SQLException e) {
+            throw new DataAccessException("Failed to fetch  agents", e);
+        }
+
     }
 }

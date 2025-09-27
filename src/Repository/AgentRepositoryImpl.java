@@ -17,23 +17,23 @@ public class AgentRepositoryImpl implements AgentRepository {
     }
 
     @Override
-    public List<Agent> getAgentsByDepartement(int departementId)throws Exception {
+    public List<Agent> getAgentsByDepartement(int departementId) throws Exception {
         return agentDAO.getAgentsByDepartement(departementId);
     }
 
     @Override
-    public void updateAgent(Agent agent)throws Exception {
+    public void updateAgent(Agent agent) throws Exception {
         agentDAO.updateAgent(agent);
     }
 
     @Override
-    public void deleteAgent(int idAgent)throws Exception {
+    public void deleteAgent(int idAgent) throws Exception {
         agentDAO.deleteAgent(idAgent);
     }
 
     @Override
-    public List<Agent> getAllAgents() throws Exception{
-        return  agentDAO.getAllAgents();
+    public List<Agent> getAllAgents() throws Exception {
+        return agentDAO.getAllAgents();
     }
 
 //

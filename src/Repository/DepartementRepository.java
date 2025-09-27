@@ -15,8 +15,8 @@ public interface DepartementRepository {
 
     List<Departement> getAllDepartements() throws Exception;
 
-    void deleteDepartement(int idDepartement)throws  Exception;
+    void deleteDepartement(int idDepartement) throws Exception;
 
-    void updateDepartement(Departement departement)throws Exception;
+    void updateDepartement(Departement departement) throws Exception;
 
 }
