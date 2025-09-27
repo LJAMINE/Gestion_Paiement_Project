@@ -1,6 +1,7 @@
 package View;
 
 import Controller.AgentController;
+import DAO.AgentDAO;
 import Model.Agent;
 import Model.Departement;
 import Model.TypeAgent;
@@ -19,6 +20,39 @@ public class AgentMenu {
         AgentController controller = new AgentController(new AgentService(new AgentRepositoryImpl()));
         DepartementService departementService = new DepartementService(new DepartementRepositoryImpl());
 
+
+        //        login--------------------------------------------------
+
+        System.out.println("se connnecter");
+        System.out.println("emaill");
+        String emailConnecte = scanner.nextLine();
+        System.out.println("mot de passe ");
+        String passwordConnecte = scanner.nextLine();
+
+        Agent currentUser = null;
+        AgentDAO agentDAO = new AgentDAO();
+
+
+        try {
+            currentUser = agentDAO.getAgentByEmailAndPassword(emailConnecte,passwordConnecte);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return;
+        }
+
+        if (currentUser == null) {
+            System.out.println("Email ou  mot de passe incorrect");
+            return;
+
+        }
+
+        // Only RESPONSABLE_DEPARTEMENT can access the agent CRUD menu
+
+        if (currentUser.getTypeAgent()!=TypeAgent.RESPONSABLE_DEPARTEMENT){
+            System.out.println("pas permission pour entrer ce menu");
+        }
+
+
         boolean agentRun = true;
 
         while (agentRun) {
@@ -35,7 +69,7 @@ public class AgentMenu {
 
             switch (choix) {
                 case 1:
-                    System.out.println("  Create agents (ouvrier ,stagiaire, responsable ) ===");
+                    System.out.println("  Create agents (ouvrier ,stagiaire ) ===");
                     System.out.println("Enter Agent name:");
                     String name = scanner.nextLine();
 
@@ -48,24 +82,18 @@ public class AgentMenu {
                     System.out.println("Enter Agent motDePasse:");
                     String motDePasse = scanner.nextLine();
 
-                    System.out.println("Enter Agent type (OUVRIER, RESPONSABLE_DEPARTEMENT, DIRECTEUR, STAGIAIRE):");
+                    System.out.println("Enter Agent type (OUVRIER, STAGIAIRE):");
                     String typeInput = scanner.nextLine();
                     TypeAgent typeAgent = TypeAgent.valueOf(typeInput);
 
 
-                    System.out.println("Enter Agent department name:");
-                    String departementName = scanner.nextLine();
-                    Departement departement;
+                    System.out.println("-------------------");
+                    System.out.println(currentUser);
+                    // Only allow OUVRIER or STAGIAIRE
 
-                    try {
-                        departement = departementService.getDepartementByName(departementName);
-                        if (departement == null) {
-                            System.out.println("Department not found");
-                            return;
-                        }
-                    } catch (Exception e) {
-                        System.out.println("error  finding department");
-                        return;
+                    if (typeAgent == TypeAgent.RESPONSABLE_DEPARTEMENT || typeAgent == TypeAgent.DIRECTEUR) {
+                        System.out.println("you can just create un  ouvrier ou un stagiaire.");
+                        break;
                     }
                     Agent agent = new Agent();
 
@@ -74,21 +102,17 @@ public class AgentMenu {
                     agent.setEmail(email);
                     agent.setMotDePasse(motDePasse);
                     agent.setTypeAgent(typeAgent);
-                    agent.setDepartement(departement);
+                    agent.setDepartement(currentUser.getDepartement());
 
                     controller.addAgent(agent);
 
                     break;
                 case 2:
-                    System.out.print("delete agent  : ");
                     System.out.println("id of agent to be deleted ");
                     int id=scanner.nextInt();
                     controller.deleteAgent(id);
-
                     break;
                 case 3:
-                    System.out.println("3. update Agent");
-
                     System.out.println("id to be updated ");
                     int idupdated = scanner.nextInt();
 
@@ -106,13 +130,14 @@ public class AgentMenu {
                     System.out.println("email to be updated ");
                     String newEmail = scanner.nextLine();
 
-                    System.out.println("Type to be updated ");
+                    System.out.println("Nouveau type (OUVRIER, STAGIAIRE) ");
                     String type = scanner.nextLine();
                     TypeAgent typeAgents = TypeAgent.valueOf(type);
 
-
-
-
+                    if (typeAgents == TypeAgent.RESPONSABLE_DEPARTEMENT || typeAgents == TypeAgent.DIRECTEUR) {
+                        System.out.println("you can update just to  ouvrier ou stagiaire.");
+                        break;
+                    }
 
 
                     Agent agentUpdated = new Agent();
@@ -123,6 +148,8 @@ public class AgentMenu {
                     agentUpdated.setEmail(newEmail);
                     agentUpdated.setMotDePasse(newPassword);
                     agentUpdated.setTypeAgent(typeAgents);
+                    agentUpdated.setDepartement(currentUser.getDepartement());
+
 
 
 
@@ -131,16 +158,19 @@ public class AgentMenu {
 
                     break;
                 case 4:
-                    System.out.println("4. get All Agent");
-                    List<Agent> list=controller.getAllAgents();
+                     List<Agent> list=controller.getAllAgents();
 
 
                     for (Agent a : list) {
-                        System.out.println(
-                                "Email: " + a.getEmail() +
-                                        ", Department: " + a.getDepartement().getNom() +
-                                        ", Department ID: " + a.getDepartement().getIdDepartement()
-                        );
+                        if (a.getDepartement().getIdDepartement()==currentUser.getDepartement().getIdDepartement()){
+                            System.out.println(
+                                    "ID: " + a.getIdAgent() +
+                                            ", Nom: " + a.getName() +
+                                            ", Prénom: " + a.getPrenom() +
+                                            ", Email: " + a.getEmail() +
+                                            ", Type: " + a.getTypeAgent() +
+                                            ", Département: " + a.getDepartement().getNom());
+                        }
                     }
 
                     break;

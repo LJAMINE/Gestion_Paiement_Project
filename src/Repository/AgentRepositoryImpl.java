@@ -1,6 +1,7 @@
 package Repository;
 
 import DAO.AgentDAO;
+import Exception.DataAccessException;
 import Model.Agent;
 
 import java.sql.SQLException;
@@ -17,23 +18,28 @@ public class AgentRepositoryImpl implements AgentRepository {
     }
 
     @Override
-    public List<Agent> getAgentsByDepartement(int departementId) throws Exception {
+    public List<Agent> getAgentsByDepartement(int departementId) throws DataAccessException {
         return agentDAO.getAgentsByDepartement(departementId);
     }
 
     @Override
-    public void updateAgent(Agent agent) throws Exception {
+    public void updateAgent(Agent agent) throws DataAccessException {
         agentDAO.updateAgent(agent);
     }
 
     @Override
-    public void deleteAgent(int idAgent) throws Exception {
+    public void deleteAgent(int idAgent) throws DataAccessException {
         agentDAO.deleteAgent(idAgent);
     }
 
     @Override
-    public List<Agent> getAllAgents() throws Exception {
+    public List<Agent> getAllAgents() throws DataAccessException {
         return agentDAO.getAllAgents();
+    }
+
+    @Override
+    public Agent getAgentByEmailAndPassword(String email, String password) throws DataAccessException {
+        return agentDAO.getAgentByEmailAndPassword(email, password);
     }
 
 //

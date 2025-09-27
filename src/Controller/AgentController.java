@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Agent;
 import Model.Departement;
+import Exception.DataAccessException;
 import Service.AgentService;
 
 import java.util.List;
@@ -52,6 +53,15 @@ public class AgentController {
         }
     }
 
+
+    public Agent getAgentByEmailAndPassword(String email, String password) {
+        try {
+            return agentService.getAgentByEmailAndPassword(email, password);
+        } catch (DataAccessException e) {
+            System.out.println("error lors de authentification : " + e.getMessage());
+            return null;
+        }
+    }
 
 }
 

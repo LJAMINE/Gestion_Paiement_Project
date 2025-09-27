@@ -27,7 +27,7 @@ public class DepartementMenu {
         Agent currentUser = null;
 
         try {
-            currentUser = agentDAO.getgetAgentByEmailAndPassword(email, password);
+            currentUser = agentDAO.getAgentByEmailAndPassword(email, password);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return;

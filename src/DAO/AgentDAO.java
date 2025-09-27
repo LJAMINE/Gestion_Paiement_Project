@@ -4,6 +4,7 @@ import Model.Agent;
 import Model.Departement;
 import Model.TypeAgent;
 import Exception.DataAccessException;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,25 +15,27 @@ public class AgentDAO {
     public void addAgent(Agent agent) {
         String sql = "INSERT INTO agent (name, prenom, email, motDePasse, typeAgent, departement_id) VALUES (?, ?, ?, ?, ?, ?)";
 
-             try (Connection conn = DatabaseConnection.getInstance().getConnection();
-                 PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, agent.getName());
-                ps.setString(2, agent.getPrenom());
-                ps.setString(3, agent.getEmail());
-                ps.setString(4, agent.getMotDePasse());
-                ps.setString(5, agent.getTypeAgent().name());
-                ps.setInt(6, agent.getDepartement().getIdDepartement());
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, agent.getName());
+            ps.setString(2, agent.getPrenom());
+            ps.setString(3, agent.getEmail());
+            ps.setString(4, agent.getMotDePasse());
+            ps.setString(5, agent.getTypeAgent().name());
+            ps.setInt(6, agent.getDepartement().getIdDepartement());
 
-                ps.executeUpdate();
-            }
-         catch (SQLException  e) {
+            ps.executeUpdate();
+        } catch (SQLException e) {
             throw new DataAccessException("Failed to add agent", e);
         }
     }
 
-    public Agent getgetAgentByEmailAndPassword(String email, String password) throws SQLException {
+    public Agent getAgentByEmailAndPassword(String email, String password) throws DataAccessException {
 
-        String sql = "SELECT * FROM agent WHERE email = ? AND motDePasse = ?";
+        String sql = "SELECT a.*,d.idDepartement,d.nom as departementNom" +
+                " FROM agent a JOIN departement d ON"  +
+                " a.departement_id = d.idDepartement " +
+                "WHERE a.email = ? AND a.motDePasse = ?";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -49,16 +52,21 @@ public class AgentDAO {
                 agent.setEmail(rs.getString("email"));
                 agent.setMotDePasse(rs.getString("motDePasse"));
                 agent.setTypeAgent(TypeAgent.valueOf(rs.getString("typeAgent")));
+
+                Departement departement = new Departement();
+                departement.setIdDepartement(rs.getInt("idDepartement"));
+                departement.setNom(rs.getString("departementNom"));
+                agent.setDepartement(departement);
                 return agent;
             }
-        return null;
-        } catch (SQLException  e) {
+            return null;
+        } catch (SQLException e) {
             throw new DataAccessException("Failed to fetch agent by email and password", e);
         }
 
     }
 
-    public List<Agent> getAgentsByDepartement(int departementId) throws SQLException {
+    public List<Agent> getAgentsByDepartement(int departementId) throws DataAccessException {
         List<Agent> agents = new ArrayList<>();
         String sql = "SELECT * FROM agent WHERE departement_id = ?";
 
@@ -76,14 +84,14 @@ public class AgentDAO {
                 agent.setTypeAgent(TypeAgent.valueOf(rs.getString("typeAgent")));
                 agents.add(agent);
             }
-        return agents;
-        }catch (SQLException  e) {
+            return agents;
+        } catch (SQLException e) {
             throw new DataAccessException("Failed to fetch agent by departement", e);
         }
 
     }
 
-    public void updateAgent(Agent agent) throws SQLException {
+    public void updateAgent(Agent agent) throws DataAccessException {
         String sql = "UPDATE agent SET name = ?, prenom = ?, email = ?, motDePasse = ?, typeAgent = ?  WHERE idAgent = ?\n ";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)
@@ -102,7 +110,7 @@ public class AgentDAO {
         }
     }
 
-    public void deleteAgent(int idAgent) throws SQLException {
+    public void deleteAgent(int idAgent) throws DataAccessException {
         String sql = "DELETE FROM agent WHERE idAgent= ?";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -114,7 +122,7 @@ public class AgentDAO {
     }
 
 
-    public List<Agent> getAllAgents() throws SQLException {
+    public List<Agent> getAllAgents() throws DataAccessException {
         List<Agent> agents = new ArrayList<>();
 
         String sql = "SELECT  a.*,d.idDepartement,d.nom as departementNom FROM agent a JOIN departement d ON d.idDepartement=a.departement_id";
@@ -131,7 +139,7 @@ public class AgentDAO {
                 agent.setTypeAgent(TypeAgent.valueOf(rs.getString("typeAgent")));
 
 //                now departement object
-                Departement departement =new Departement();
+                Departement departement = new Departement();
                 departement.setIdDepartement(rs.getInt("idDepartement"));
                 departement.setNom(rs.getString("departementNom"));
                 agent.setDepartement(departement);
