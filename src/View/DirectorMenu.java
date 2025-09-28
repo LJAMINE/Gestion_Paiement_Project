@@ -1,59 +1,29 @@
 package View;
 
+import Controller.AgentController;
 import Controller.DepartementController;
 import DAO.AgentDAO;
 import Model.Agent;
 import Model.Departement;
 import Model.TypeAgent;
+import Repository.AgentRepositoryImpl;
 import Repository.DepartementRepositoryImpl;
+import Service.AgentService;
 import Service.DepartementService;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class DepartementMenu {
-    public static void main(String[] args) throws Exception {
+public class DirectorMenu {
+    public static void launch(Agent currentUser) throws Exception {
         Scanner scanner = new Scanner(System.in);
         AgentDAO agentDAO = new AgentDAO();
-
-//        login--------------------------------------------------
-
-        System.out.println("se connnecter");
-        System.out.println("emaill");
-        String email = scanner.nextLine();
-        System.out.println("mot de passe ");
-        String password = scanner.nextLine();
-
-        Agent currentUser = null;
-
-        try {
-            currentUser = agentDAO.getAgentByEmailAndPassword(email, password);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return;
-        }
-
-        if (currentUser == null) {
-            System.out.println("Email ou  mot de passe incorrect");
-            return;
-
-        }
-
-
-//        role checking----------------------------------------------
-
-        if (currentUser.getTypeAgent() != TypeAgent.DIRECTEUR) {
-            System.out.println("access refuse seul directeur peut creer  un departement .");
-            return;
-        }
-
 
         DepartementController controller = new DepartementController(
                 new DepartementService(new DepartementRepositoryImpl())
         );
 
         boolean directorRun = true;
-
         while (directorRun) {
 
             System.out.println("\ndepartement Menu :");
@@ -61,6 +31,8 @@ public class DepartementMenu {
             System.out.println("2. delete");
             System.out.println("3. update Departement");
             System.out.println("4. get All Departements");
+            System.out.println("5. create/Assign Responsible for a Department");
+
             System.out.println("0. Quitter");
 
             int choix = scanner.nextInt();
@@ -108,6 +80,50 @@ public class DepartementMenu {
                         System.out.println(dep.getIdDepartement() + "  " + dep.getNom());
                     }
                     break;
+                case 5:
+                    System.out.print("Enter department name to create and assign a responsable: ");
+                    String departementName=scanner.nextLine();
+                    Departement departement12=controller.getDepartementByName(departementName);
+
+                    if (departement12==null){
+                        System.out.println("departement not found");
+                        break;
+                    }
+                    List<Agent> agentsInDepartement=agentDAO.getAgentsByDepartement(departement12.getIdDepartement());
+                    boolean contientResponsable=agentsInDepartement.stream().anyMatch(a->a.getTypeAgent()==TypeAgent.RESPONSABLE_DEPARTEMENT);
+                    if (contientResponsable){
+                        System.out.println("this departement has already a responsable");
+                        break;
+                    }
+                    System.out.print("Responsable name: ");
+                    String respName = scanner.nextLine();
+                    System.out.print("Responsable prenom: ");
+                    String respPrenom = scanner.nextLine();
+                    System.out.print("Responsable email: ");
+                    String respEmail = scanner.nextLine();
+                    System.out.print("Responsable password: ");
+                    String respPassword = scanner.nextLine();
+
+                    Agent responsable = new Agent();
+                    responsable.setName(respName);
+                    responsable.setPrenom(respPrenom);
+                    responsable.setEmail(respEmail);
+                    responsable.setMotDePasse(respPassword);
+                    responsable.setTypeAgent(TypeAgent.RESPONSABLE_DEPARTEMENT);
+                    responsable.setDepartement(departement12);
+
+
+                    AgentController agentController=new AgentController(new AgentService(new AgentRepositoryImpl()));
+
+                    try{
+                        agentController.addAgent(responsable);
+                        System.out.println("responsbale added succefully");
+                    } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                    }
+                    break;
+
+
                 case 0:
                     directorRun = false;
                     break;

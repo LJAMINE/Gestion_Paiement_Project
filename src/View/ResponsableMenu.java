@@ -1,58 +1,16 @@
 package View;
 
 import Controller.AgentController;
-import DAO.AgentDAO;
 import Model.Agent;
-import Model.Departement;
 import Model.TypeAgent;
-import Repository.AgentRepositoryImpl;
-import Repository.DepartementRepositoryImpl;
-import Service.AgentService;
-import Service.DepartementService;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class AgentMenu {
-    public static void main(String[] args) throws Exception {
+public class ResponsableMenu {
+
+    public static void launch(Agent currentUser, AgentController controller)throws Exception{
         Scanner scanner = new Scanner(System.in);
-
-        AgentController controller = new AgentController(new AgentService(new AgentRepositoryImpl()));
-        DepartementService departementService = new DepartementService(new DepartementRepositoryImpl());
-
-
-        //        login--------------------------------------------------
-
-        System.out.println("se connnecter");
-        System.out.println("emaill");
-        String emailConnecte = scanner.nextLine();
-        System.out.println("mot de passe ");
-        String passwordConnecte = scanner.nextLine();
-
-        Agent currentUser = null;
-        AgentDAO agentDAO = new AgentDAO();
-
-
-        try {
-            currentUser = agentDAO.getAgentByEmailAndPassword(emailConnecte,passwordConnecte);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return;
-        }
-
-        if (currentUser == null) {
-            System.out.println("Email ou  mot de passe incorrect");
-            return;
-
-        }
-
-        // Only RESPONSABLE_DEPARTEMENT can access the agent CRUD menu
-
-        if (currentUser.getTypeAgent()!=TypeAgent.RESPONSABLE_DEPARTEMENT){
-            System.out.println("pas permission pour entrer ce menu");
-        }
-
-
         boolean agentRun = true;
 
         while (agentRun) {
@@ -158,7 +116,7 @@ public class AgentMenu {
 
                     break;
                 case 4:
-                     List<Agent> list=controller.getAllAgents();
+                    List<Agent> list=controller.getAllAgents();
 
 
                     for (Agent a : list) {
@@ -183,7 +141,6 @@ public class AgentMenu {
             }
 
         }
-
 
 
     }

@@ -51,5 +51,13 @@ public class DepartementController {
         }
     }
 
+    public Departement getDepartementByName(String name){
+        try{
+         return    departementService.getDepartementByName(name);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }
