@@ -2,15 +2,17 @@ package View;
 
 import Controller.AgentController;
 import Controller.DepartementController;
+import Controller.PaiementController;
 import DAO.AgentDAO;
-import Model.Agent;
-import Model.Departement;
-import Model.TypeAgent;
+import Model.*;
 import Repository.AgentRepositoryImpl;
 import Repository.DepartementRepositoryImpl;
+import Repository.PaiementRepositoryImpl;
 import Service.AgentService;
 import Service.DepartementService;
+import Service.PaiementService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,6 +20,9 @@ public class DirectorMenu {
     public static void launch(Agent currentUser) throws Exception {
         Scanner scanner = new Scanner(System.in);
         AgentDAO agentDAO = new AgentDAO();
+        PaiementController paiementController = new PaiementController(new PaiementService(new PaiementRepositoryImpl()));
+
+
 
         DepartementController controller = new DepartementController(
                 new DepartementService(new DepartementRepositoryImpl())
@@ -32,6 +37,7 @@ public class DirectorMenu {
             System.out.println("3. update Departement");
             System.out.println("4. get All Departements");
             System.out.println("5. create/Assign Responsible for a Department");
+            System.out.println("6. add paiement to responsable ");
 
             System.out.println("0. Quitter");
 
@@ -82,16 +88,16 @@ public class DirectorMenu {
                     break;
                 case 5:
                     System.out.print("Enter department name to create and assign a responsable: ");
-                    String departementName=scanner.nextLine();
-                    Departement departement12=controller.getDepartementByName(departementName);
+                    String departementName = scanner.nextLine();
+                    Departement departement12 = controller.getDepartementByName(departementName);
 
-                    if (departement12==null){
+                    if (departement12 == null) {
                         System.out.println("departement not found");
                         break;
                     }
-                    List<Agent> agentsInDepartement=agentDAO.getAgentsByDepartement(departement12.getIdDepartement());
-                    boolean contientResponsable=agentsInDepartement.stream().anyMatch(a->a.getTypeAgent()==TypeAgent.RESPONSABLE_DEPARTEMENT);
-                    if (contientResponsable){
+                    List<Agent> agentsInDepartement = agentDAO.getAgentsByDepartement(departement12.getIdDepartement());
+                    boolean contientResponsable = agentsInDepartement.stream().anyMatch(a -> a.getTypeAgent() == TypeAgent.RESPONSABLE_DEPARTEMENT);
+                    if (contientResponsable) {
                         System.out.println("this departement has already a responsable");
                         break;
                     }
@@ -113,14 +119,72 @@ public class DirectorMenu {
                     responsable.setDepartement(departement12);
 
 
-                    AgentController agentController=new AgentController(new AgentService(new AgentRepositoryImpl()));
+                    AgentController agentController = new AgentController(new AgentService(new AgentRepositoryImpl()));
 
-                    try{
+                    try {
                         agentController.addAgent(responsable);
                         System.out.println("responsbale added succefully");
                     } catch (Exception e) {
                         System.out.println("Error: " + e.getMessage());
                     }
+                    break;
+
+                case 6:
+                    System.out.println("id of agent ");
+                    int idofAgent = scanner.nextInt();
+                    scanner.nextLine();
+
+                    Agent agent12 = agentDAO.getAgentById(idofAgent);
+                    if (agent12 == null) {
+                        System.out.println("not found ");
+                        break;
+                    }
+
+                    System.out.print("Type de paiement (SALAIRE, PRIME, BONUS, INDEMNITE): ");
+                    String typePaiemnt = scanner.nextLine();
+                    TypePaiement typePaiement = TypePaiement.valueOf(typePaiemnt);
+
+                    System.out.print("montant ");
+                    Double montant = scanner.nextDouble();
+                    scanner.nextLine();
+
+                    LocalDate date = LocalDate.now();
+
+                    System.out.print("motif ");
+                    String motif = scanner.nextLine();
+
+                    boolean conditionValidee = true;
+
+                    Paiement paiement = new Paiement();
+
+                    if (typePaiement == TypePaiement.BONUS || typePaiement == TypePaiement.INDEMNITE) {
+                        System.out.print("Condition validée ? (O/N): ");
+                        conditionValidee = scanner.nextLine().equalsIgnoreCase("O");
+                    } else {
+                        conditionValidee = false;
+                    }
+                    paiement.setConditionValidee(conditionValidee);
+
+                    paiement.setTypePaiement(typePaiement);
+                    paiement.setMontant(montant);
+                    paiement.setDate(date);
+                    paiement.setMotif(motif);
+                    paiement.setAgent(agent12);
+
+
+                    try {
+
+                        System.out.println("''''''''''''''''''''''''''''''''''''''");
+                        paiementController.addPaiement(currentUser, paiement);
+                        ;
+                        System.out.println("''''''''''''''''''''''''''''''''''''''");
+
+//                        System.out.println("Paiement avec success");
+                    } catch (Exception e) {
+                        System.out.println("error  : " + e.getMessage());
+                    }
+
+
                     break;
 
 

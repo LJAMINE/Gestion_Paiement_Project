@@ -33,7 +33,7 @@ public class AgentDAO {
     public Agent getAgentByEmailAndPassword(String email, String password) throws DataAccessException {
 
         String sql = "SELECT a.*,d.idDepartement,d.nom as departementNom" +
-                " FROM agent a JOIN departement d ON"  +
+                " FROM agent a JOIN departement d ON" +
                 " a.departement_id = d.idDepartement " +
                 "WHERE a.email = ? AND a.motDePasse = ?";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
@@ -156,4 +156,32 @@ public class AgentDAO {
         }
 
     }
+
+    public Agent getAgentById(int id) throws SQLException {
+        String sql = "SELECT * FROM agent WHERE idAgent=?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Agent agent = new Agent();
+                agent.setIdAgent(rs.getInt("idAgent"));
+                agent.setName(rs.getString("name"));
+                agent.setPrenom(rs.getString("prenom"));
+                agent.setEmail(rs.getString("email"));
+                agent.setMotDePasse(rs.getString("motDePasse"));
+                agent.setTypeAgent(TypeAgent.valueOf(rs.getString("typeAgent")));
+                int deptId = rs.getInt("departement_id");
+
+                if (!rs.wasNull()) {
+                    DepartementDAO departementDAO = new DepartementDAO();
+                    Departement departement = departementDAO.getDepartementById(deptId);
+                    agent.setDepartement(departement);
+                }
+                return agent;
+            }
+        }
+        return null;
+    }
+
 }

@@ -1,9 +1,16 @@
 package View;
 
 import Controller.AgentController;
+import Controller.PaiementController;
+import DAO.AgentDAO;
 import Model.Agent;
+import Model.Paiement;
 import Model.TypeAgent;
+import Model.TypePaiement;
+import Repository.PaiementRepositoryImpl;
+import Service.PaiementService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,8 +18,10 @@ public class ResponsableMenu {
 
     public static void launch(Agent currentUser, AgentController controller)throws Exception{
         Scanner scanner = new Scanner(System.in);
+        PaiementController paiementController =  new PaiementController(new PaiementService(new PaiementRepositoryImpl()));
         boolean agentRun = true;
 
+        AgentDAO agentDAO = new AgentDAO();
         while (agentRun) {
 
             System.out.println("\nresponsable Menu :");
@@ -20,6 +29,7 @@ public class ResponsableMenu {
             System.out.println("2. delete");
             System.out.println("3. update agent");
             System.out.println("4. get All agent");
+            System.out.println("5. add paiement to an agent ");
             System.out.println("0. Quitter");
 
             int choix = scanner.nextInt();
@@ -130,6 +140,65 @@ public class ResponsableMenu {
                                             ", Département: " + a.getDepartement().getNom());
                         }
                     }
+
+                    break;
+                case 5:
+                    System.out.println("id of agent ");
+                    int idofAgent=scanner.nextInt();
+                    scanner.nextLine();
+
+                    Agent agent12=agentDAO.getAgentById(idofAgent);
+                    if (agent12 ==null){
+                        System.out.println("not found ");
+                        break;
+                    }
+
+                    System.out.print("Type de paiement (SALAIRE, PRIME, BONUS, INDEMNITE): ");
+                    String typePaiemnt=scanner.nextLine();
+                    TypePaiement typePaiement=TypePaiement.valueOf(typePaiemnt);
+
+                    System.out.print("montant ");
+                    Double montant=scanner.nextDouble();
+                    scanner.nextLine();
+
+                    LocalDate date = LocalDate.now();
+
+                    System.out.print("motif ");
+                    String motif = scanner.nextLine();
+
+                    boolean conditionValidee = true;
+
+                    Paiement paiement = new Paiement();
+
+                    if (typePaiement == TypePaiement.BONUS || typePaiement == TypePaiement.INDEMNITE) {
+                        System.out.print("Condition validée ? (O/N): ");
+                        conditionValidee = scanner.nextLine().equalsIgnoreCase("O");
+                    } else {
+                        conditionValidee = false;
+                    }
+                    paiement.setConditionValidee(conditionValidee);
+
+                    paiement.setTypePaiement(typePaiement);
+                    paiement.setMontant(montant);
+                    paiement.setDate(date);
+                    paiement.setMotif(motif);
+                    paiement.setAgent(agent12);
+
+
+
+                    try {
+
+                        System.out.println("''''''''''''''''''''''''''''''''''''''");
+                   paiementController.addPaiement(currentUser,paiement);
+                        ;
+                        System.out.println("''''''''''''''''''''''''''''''''''''''");
+
+//                        System.out.println("Paiement avec success");
+                    } catch (Exception e) {
+                        System.out.println("error  : " + e.getMessage());
+                    }
+
+
 
                     break;
                 case 0:

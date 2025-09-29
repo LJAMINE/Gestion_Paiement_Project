@@ -10,6 +10,9 @@ public class Paiement {
     private LocalDate date;
     private String motif; // motif or event
     private Agent agent; // Association with Agent
+    private boolean isConditionValidee;
+
+
 
     public Paiement() {
         // Default constructor for instantiate without all arguments.
@@ -22,6 +25,15 @@ public class Paiement {
         this.motif = motif;
         this.agent = agent;
     }
+
+    public boolean isConditionValidee() {
+        return isConditionValidee;
+    }
+
+    public void setConditionValidee(boolean conditionValidee) {
+        isConditionValidee = conditionValidee;
+    }
+
 
     public int getIdPaiement() {
         return idPaiement;

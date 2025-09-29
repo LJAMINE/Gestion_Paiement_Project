@@ -1,11 +1,15 @@
 package View;
 
 import Controller.AgentController;
+import Controller.PaiementController;
 import DAO.AgentDAO;
 import Model.Agent;
 import Model.TypeAgent;
 import Repository.AgentRepositoryImpl;
+import Repository.PaiementRepositoryImpl;
+import Repository.PaimentRepository;
 import Service.AgentService;
+import Service.PaiementService;
 
 import java.util.Scanner;
 
@@ -14,9 +18,6 @@ public class MainMenu {
         Scanner scanner = new Scanner(System.in);
         AgentController controller = new AgentController(new AgentService(new AgentRepositoryImpl()));
         AgentDAO agentDAO = new AgentDAO();
-
-
-
 
         //        login--------------------------------------------------
 
@@ -29,7 +30,7 @@ public class MainMenu {
 
         Agent currentUser = agentDAO.getAgentByEmailAndPassword(emailConnecte, passwordConnecte);
 
-        if (currentUser==null){
+        if (currentUser == null) {
             System.out.println("email or password are incorrect ");
             return;
         }
