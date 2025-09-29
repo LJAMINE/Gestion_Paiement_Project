@@ -6,10 +6,12 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import Exception.DataAccessException;
+
 
 public class PaiementDAO {
 
-    public void addPaiement(Paiement paiement) throws SQLException {
+    public void addPaiement(Paiement paiement) throws DataAccessException {
         String sql = "INSERT INTO paiement (typePaiement, montant, date, motif, conditionValidee, agent_id) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -21,10 +23,10 @@ public class PaiementDAO {
             ps.setInt(6, paiement.getAgent().getIdAgent());
 
             int rows = ps.executeUpdate();
-            System.out.println("Rows inserted: " + rows);
+//            System.out.println("Rows inserted: " + rows);
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw e;
+            throw new DataAccessException("Erreur lors de l'ajout du paiement.", e);
+
         }
     }
 }
