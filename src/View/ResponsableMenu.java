@@ -30,6 +30,8 @@ public class ResponsableMenu {
             System.out.println("3. update agent");
             System.out.println("4. get All agent");
             System.out.println("5. add paiement to an agent ");
+            System.out.println("6. Afficher la moyenne des paiements pour agent");
+
             System.out.println("0. Quitter");
 
             int choix = scanner.nextInt();
@@ -198,6 +200,19 @@ public class ResponsableMenu {
                         System.out.println("error  : " + e.getMessage());
                     }
 
+
+
+                    break;
+
+                case 6:
+
+
+                    System.out.println("give the id of agent ");
+                    int idAGENT=scanner.nextInt();
+                     paiementController.getPaiementByAgent(idAGENT).stream().mapToDouble(Paiement::getMontant).average().ifPresentOrElse(
+                        moyenne -> System.out.println("Moyenne des paiements : " + moyenne),
+                        () -> System.out.println("Aucun paiement found  pour calculer la moyenne.")
+                );
 
 
                     break;

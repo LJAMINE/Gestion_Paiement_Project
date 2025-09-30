@@ -9,6 +9,8 @@ import Repository.PaiementRepositoryImpl;
 import Service.PaiementService;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalDouble;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,7 @@ public class AgentOSMenu {
             System.out.println("3. Voir historique  du  paiement");
             System.out.println("4. Calculer le total de mes paiements");
             System.out.println("5. filtrer les paiement by Type");
+            System.out.println("6. biggest montant ");
 
 
             System.out.println("0. Quitter");
@@ -54,13 +57,19 @@ public class AgentOSMenu {
                     break;
 
                 case 5:
-                    System.out.println("entrer type of paiment for filter ");
-                    String typeChoisi=scanner.nextLine();
+                    System.out.println("entrer type of paiement for filter ");
+                    String typeChoisi = scanner.nextLine();
 
-                    TypePaiement typePaiement=TypePaiement.valueOf(typeChoisi);
+                    TypePaiement typePaiement = TypePaiement.valueOf(typeChoisi);
 
-                    List<Paiement> paiementsFiltred=paiementController.getPaiementByAgent(currentUser.getIdAgent()).stream().filter(p->p.getTypePaiement()==typePaiement).toList();
-                           paiementsFiltred.forEach(System.out::println);
+                    List<Paiement> paiementsFiltred = paiementController.getPaiementByAgent(currentUser.getIdAgent()).stream().filter(p -> p.getTypePaiement() == typePaiement).toList();
+                    paiementsFiltred.forEach(System.out::println);
+                    break;
+
+                case 6:
+                       OptionalDouble maximumMontant =paiementController.getPaiementByAgent(currentUser.getIdAgent()).stream().mapToDouble(Paiement::getMontant).max();
+
+                    System.out.println("max montant is "+maximumMontant);
 
                     break;
                 case 0:
