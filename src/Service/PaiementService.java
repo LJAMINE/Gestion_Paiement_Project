@@ -6,6 +6,8 @@ import Model.TypeAgent;
 import Model.TypePaiement;
 import Repository.PaimentRepository;
 
+import java.util.List;
+
 public class PaiementService {
     private PaimentRepository paimentRepository;
 
@@ -57,5 +59,9 @@ public class PaiementService {
         }
         paimentRepository.addPaiement(paiement);
 
+    }
+
+    public List<Paiement> getPaiementByAgent(int idAgent)throws Exception{
+     return paimentRepository.getPaiementByAgent(idAgent);
     }
 }

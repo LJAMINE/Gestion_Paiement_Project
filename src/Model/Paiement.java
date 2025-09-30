@@ -59,6 +59,18 @@ public class Paiement {
         this.montant = montant;
     }
 
+    @Override
+    public String toString() {
+        return "Paiement{" +
+                "idPaiement=" + idPaiement +
+                ", typePaiement=" + typePaiement +
+                ", montant=" + montant +
+                ", date=" + date +
+                ", motif='" + motif + '\'' +
+                 ", isConditionValidee=" + isConditionValidee +
+                '}';
+    }
+
     public LocalDate getDate() {
         return date;
     }
