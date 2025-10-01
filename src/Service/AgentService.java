@@ -2,7 +2,7 @@ package Service;
 
 import Model.Agent;
 import Model.TypeAgent;
-import Repository.AgentRepository;
+import Repository.interfaces.AgentRepository;
 import Exception.DataAccessException;
 import Exception.BusinessException;
 

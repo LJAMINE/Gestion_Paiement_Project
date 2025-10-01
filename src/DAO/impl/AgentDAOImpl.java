@@ -1,5 +1,7 @@
-package DAO;
+package DAO.impl;
 
+import DAO.DB.DatabaseConnection;
+import DAO.interfaces.IAgentDAO;
 import Model.Agent;
 import Model.Departement;
 import Model.TypeAgent;
@@ -9,7 +11,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AgentDAO {
+public class AgentDAOImpl implements IAgentDAO {
 
 
     public void addAgent(Agent agent) {

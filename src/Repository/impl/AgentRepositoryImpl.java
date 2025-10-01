@@ -1,15 +1,20 @@
-package Repository;
+package Repository.impl;
 
-import DAO.AgentDAO;
+import DAO.interfaces.IAgentDAO;
 import Exception.DataAccessException;
 import Model.Agent;
+import Repository.interfaces.AgentRepository;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class AgentRepositoryImpl implements AgentRepository {
 
-    private AgentDAO agentDAO = new AgentDAO();
+    //    private AgentDAO agentDAO = new AgentDAO();
+    private final IAgentDAO agentDAO;
+
+    public AgentRepositoryImpl(IAgentDAO agentDAO) {
+        this.agentDAO = agentDAO;
+    }
 
 
     @Override

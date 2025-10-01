@@ -2,12 +2,12 @@ package View;
 
 import Controller.AgentController;
 import Controller.PaiementController;
-import DAO.AgentDAO;
+import DAO.impl.AgentDAOImpl;
 import Model.Agent;
 import Model.Paiement;
 import Model.TypeAgent;
 import Model.TypePaiement;
-import Repository.PaiementRepositoryImpl;
+import Repository.impl.PaiementRepositoryImpl;
 import Service.PaiementService;
 
 import java.time.LocalDate;
@@ -21,7 +21,7 @@ public class ResponsableMenu {
         PaiementController paiementController =  new PaiementController(new PaiementService(new PaiementRepositoryImpl()));
         boolean agentRun = true;
 
-        AgentDAO agentDAO = new AgentDAO();
+        AgentDAOImpl agentDAO = new AgentDAOImpl();
         while (agentRun) {
 
             System.out.println("\nresponsable Menu :");

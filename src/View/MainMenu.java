@@ -1,17 +1,14 @@
 package View;
 
 import Controller.AgentController;
-import Controller.PaiementController;
-import DAO.AgentDAO;
+import DAO.impl.AgentDAOImpl;
+import DAO.interfaces.IAgentDAO;
 import Model.Agent;
 import Model.TypeAgent;
-import Repository.AgentRepositoryImpl;
-import Repository.PaiementRepositoryImpl;
-import Repository.PaimentRepository;
+import Repository.impl.AgentRepositoryImpl;
 import Service.AgentService;
-import Service.PaiementService;
-import  Exception.DataAccessException;
-import  Exception.BusinessException;
+import Exception.DataAccessException;
+import Exception.BusinessException;
 
 import java.util.Scanner;
 
@@ -19,8 +16,9 @@ public class MainMenu {
     public static void main(String[] args) throws Exception {
         try {
             Scanner scanner = new Scanner(System.in);
-            AgentController controller = new AgentController(new AgentService(new AgentRepositoryImpl()));
-            AgentDAO agentDAO = new AgentDAO();
+            AgentController controller = new AgentController(new AgentService(new AgentRepositoryImpl(new AgentDAOImpl())));
+
+            IAgentDAO agentDAO = new AgentDAOImpl();
 
             //        login--------------------------------------------------
 

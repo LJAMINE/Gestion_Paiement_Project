@@ -4,7 +4,7 @@ import Model.Agent;
 import Model.Paiement;
 import Model.TypeAgent;
 import Model.TypePaiement;
-import Repository.PaimentRepository;
+import Repository.interfaces.PaimentRepository;
 
 import java.util.List;
 

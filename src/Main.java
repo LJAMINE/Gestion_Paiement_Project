@@ -1,4 +1,4 @@
-import DAO.DatabaseConnection;
+import DAO.DB.DatabaseConnection;
 import java.sql.Connection;
 
 public class Main {

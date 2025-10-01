@@ -1,6 +1,5 @@
-package Repository;
+package Repository.interfaces;
 
-import Model.Agent;
 import Model.Paiement;
 
 import java.util.List;

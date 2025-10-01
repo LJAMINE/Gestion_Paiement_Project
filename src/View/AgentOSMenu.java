@@ -5,14 +5,12 @@ import Model.Agent;
 import Model.Departement;
 import Model.Paiement;
 import Model.TypePaiement;
-import Repository.PaiementRepositoryImpl;
+import Repository.impl.PaiementRepositoryImpl;
 import Service.PaiementService;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 
 public class AgentOSMenu {

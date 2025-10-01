@@ -1,7 +1,8 @@
-package Repository;
+package Repository.impl;
 
-import DAO.DepartementDAO;
+import DAO.impl.DepartementDAO;
 import Model.Departement;
+import Repository.interfaces.DepartementRepository;
 
 import java.util.List;
 

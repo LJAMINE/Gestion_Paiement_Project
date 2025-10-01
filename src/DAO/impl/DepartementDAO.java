@@ -1,5 +1,7 @@
-package DAO;
+package DAO.impl;
 
+import DAO.DB.DatabaseConnection;
+import DAO.interfaces.IDepartementDAO;
 import Model.Departement;
 
 import java.sql.*;
@@ -7,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DepartementDAO {
+public class DepartementDAO implements IDepartementDAO {
     public void addDepartement(Departement departement) throws SQLException {
 
         String sql = "INSERT INTO departement (nom) VALUES (?)";

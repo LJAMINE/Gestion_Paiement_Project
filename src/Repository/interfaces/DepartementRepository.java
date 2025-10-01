@@ -1,4 +1,4 @@
-package Repository;
+package Repository.interfaces;
 
 import Model.Departement;
 

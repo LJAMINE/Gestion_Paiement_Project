@@ -3,11 +3,12 @@ package View;
 import Controller.AgentController;
 import Controller.DepartementController;
 import Controller.PaiementController;
-import DAO.AgentDAO;
+import DAO.impl.AgentDAOImpl;
+import DAO.interfaces.IAgentDAO;
 import Model.*;
-import Repository.AgentRepositoryImpl;
-import Repository.DepartementRepositoryImpl;
-import Repository.PaiementRepositoryImpl;
+import Repository.impl.AgentRepositoryImpl;
+import Repository.impl.DepartementRepositoryImpl;
+import Repository.impl.PaiementRepositoryImpl;
 import Service.AgentService;
 import Service.DepartementService;
 import Service.PaiementService;
@@ -19,7 +20,7 @@ import java.util.Scanner;
 public class DirectorMenu {
     public static void launch(Agent currentUser) throws Exception {
         Scanner scanner = new Scanner(System.in);
-        AgentDAO agentDAO = new AgentDAO();
+        IAgentDAO agentDAO = new AgentDAOImpl();
         PaiementController paiementController = new PaiementController(new PaiementService(new PaiementRepositoryImpl()));
 
 
@@ -119,7 +120,7 @@ public class DirectorMenu {
                     responsable.setDepartement(departement12);
 
 
-                    AgentController agentController = new AgentController(new AgentService(new AgentRepositoryImpl()));
+                    AgentController agentController = new AgentController(new AgentService(new AgentRepositoryImpl(new AgentDAOImpl())));
 
                     try {
                         agentController.addAgent(responsable);

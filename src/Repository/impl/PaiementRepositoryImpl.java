@@ -1,9 +1,9 @@
-package Repository;
+package Repository.impl;
 
-import DAO.PaiementDAO;
+import DAO.impl.PaiementDAO;
 import Model.Paiement;
+import Repository.interfaces.PaimentRepository;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class PaiementRepositoryImpl implements PaimentRepository {

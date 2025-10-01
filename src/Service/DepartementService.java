@@ -1,9 +1,7 @@
 package Service;
 
-import Model.Agent;
 import Model.Departement;
-import Model.TypeAgent;
-import Repository.DepartementRepository;
+import Repository.interfaces.DepartementRepository;
 
 import java.util.List;
 
