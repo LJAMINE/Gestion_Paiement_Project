@@ -8,6 +8,8 @@ import Model.TypePaiement;
 import Repository.impl.PaiementRepositoryImpl;
 import Service.PaiementService;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.OptionalDouble;
 import java.util.Scanner;
@@ -26,6 +28,8 @@ public class AgentOSMenu {
             System.out.println("4. Calculer le total de mes paiements");
             System.out.println("5. filtrer les paiement by Type");
             System.out.println("6. biggest montant ");
+            System.out.println("7. sort by date  ");
+            System.out.println("8. sort by montant  ");
 
 
             System.out.println("0. Quitter");
@@ -63,13 +67,23 @@ public class AgentOSMenu {
                     List<Paiement> paiementsFiltred = paiementController.getPaiementByAgent(currentUser.getIdAgent()).stream().filter(p -> p.getTypePaiement() == typePaiement).toList();
                     paiementsFiltred.forEach(System.out::println);
                     break;
-
                 case 6:
-                       OptionalDouble maximumMontant =paiementController.getPaiementByAgent(currentUser.getIdAgent()).stream().mapToDouble(Paiement::getMontant).max();
-
-                    System.out.println("max montant is "+maximumMontant);
-
+                    OptionalDouble maximumMontant = paiementController.getPaiementByAgent(currentUser.getIdAgent()).stream().mapToDouble(Paiement::getMontant).max();
+                    System.out.println("max montant is " + maximumMontant);
                     break;
+
+                case 7:
+                    List<Paiement> paimentFiltrer=paiementController.getPaiementByAgent(currentUser.getIdAgent()).stream().sorted(Comparator.comparing(Paiement::getDate)).toList();
+                    System.out.println("les paiements filtres sont =>"+paimentFiltrer);
+                    break;
+
+                case 8 :
+                    List<Paiement> paimentsorted=paiementController.getPaiementByAgent(currentUser.getIdAgent()).stream().sorted(Comparator.comparing(Paiement::getMontant)).toList();
+                    System.out.println("Paiements sorted  par montant :");
+                    paimentsorted.forEach(p ->
+                            System.out.println(" - Montant: " + p.getMontant() +
+                                    " | Date: " + p.getDate())
+                    );                    break;
                 case 0:
                     run = false;
                     break;

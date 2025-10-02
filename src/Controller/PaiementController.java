@@ -20,7 +20,6 @@ public class PaiementController {
 
         } catch (Exception e) {
             System.out.println("Error dddd: " + e.getMessage());
-
         }
     }
 

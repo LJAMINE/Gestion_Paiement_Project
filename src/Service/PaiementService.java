@@ -33,13 +33,13 @@ public class PaiementService {
         } else if (currentUser.getTypeAgent()==TypeAgent.RESPONSABLE_DEPARTEMENT) {
             if (target.getDepartement() == null ||
                     target.getDepartement().getIdDepartement() != currentUser.getDepartement().getIdDepartement()) {
-                throw new Exception("Vous ne pouvez payer que les agents de votre propre département.");
+                throw new Exception("Vous ne pouvez payer que les agents de votre propre departement .");
             }
             if (target.getTypeAgent() != TypeAgent.OUVRIER && target.getTypeAgent() != TypeAgent.STAGIAIRE) {
                 throw new Exception("Vous ne pouvez payer que les ouvriers ou stagiaires de votre département.");
             }
         }else {
-            throw new Exception("Vous n'avez pas le droit d'ajouter des paiements.");
+            throw new Exception("you don't have le droit ajouter des paiements.");
 
         }
 
@@ -50,7 +50,7 @@ public class PaiementService {
         if ((paiement.getTypePaiement() == TypePaiement.BONUS || paiement.getTypePaiement() == TypePaiement.INDEMNITE)) {
             Agent a = paiement.getAgent();
             if (!(a.getTypeAgent() == TypeAgent.RESPONSABLE_DEPARTEMENT || a.getTypeAgent() == TypeAgent.DIRECTEUR)) {
-                throw new Exception("just director and responsable are eligible of bonus and indemnit");
+                throw new Exception("just director and responsable are eligible of bonus and indemnite");
             }
             if (!(paiement.isConditionValidee())) {
                 throw new Exception("Condition non valid pour bonus/indemnit.");

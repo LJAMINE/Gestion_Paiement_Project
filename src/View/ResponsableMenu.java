@@ -43,18 +43,47 @@ public class ResponsableMenu {
                     System.out.println("Enter Agent name:");
                     String name = scanner.nextLine();
 
+                    if (name==null || name.trim().isEmpty()){
+                        System.out.println("pas valide");
+                        return;
+                    }
+
                     System.out.println("Enter Agent prenom:");
                     String prenom = scanner.nextLine();
+
+                    if (prenom==null || prenom.trim().isEmpty()){
+                        System.out.println("pas valide");
+                        return;
+                    }
 
                     System.out.println("Enter Agent email:");
                     String email = scanner.nextLine();
 
+                    if (email==null || email.trim().isEmpty()){
+                        System.out.println("pas valide");
+                        return;
+                    }
+
                     System.out.println("Enter Agent motDePasse:");
                     String motDePasse = scanner.nextLine();
 
+
+                    if (motDePasse==null || motDePasse.trim().isEmpty()){
+                        System.out.println("pas valide");
+                        return;
+                    }
+
                     System.out.println("Enter Agent type (OUVRIER, STAGIAIRE):");
                     String typeInput = scanner.nextLine();
-                    TypeAgent typeAgent = TypeAgent.valueOf(typeInput);
+//                    TypeAgent typeAgent = TypeAgent.valueOf(typeInput);
+
+                    TypeAgent typeAgent = null;
+                    try {
+                        typeAgent = TypeAgent.valueOf(typeInput.toUpperCase());
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Type d’agent invalide !");
+                        return;
+                    }
 
 
                     System.out.println("-------------------");
@@ -150,6 +179,7 @@ public class ResponsableMenu {
                     scanner.nextLine();
 
                     Agent agent12=agentDAO.getAgentById(idofAgent);
+
                     if (agent12 ==null){
                         System.out.println("not found ");
                         break;
@@ -157,11 +187,26 @@ public class ResponsableMenu {
 
                     System.out.print("Type de paiement (SALAIRE, PRIME, BONUS, INDEMNITE): ");
                     String typePaiemnt=scanner.nextLine();
-                    TypePaiement typePaiement=TypePaiement.valueOf(typePaiemnt);
+                    TypePaiement typePaiement ;
 
+                    try {
+                        typePaiement = TypePaiement.valueOf(typePaiemnt.toUpperCase());
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Type de paiement invalide.");
+                        break;
+                    }
                     System.out.print("montant ");
                     Double montant=scanner.nextDouble();
                     scanner.nextLine();
+
+                    try{
+                          if (montant<=0){
+                              System.out.println("montant doit etre positif");
+                          }
+                    } catch (NumberFormatException  e) {
+                        System.out.println("Format de montant invalide.");
+                        break;
+                    }
 
                     LocalDate date = LocalDate.now();
 
@@ -173,10 +218,11 @@ public class ResponsableMenu {
                     Paiement paiement = new Paiement();
 
                     if (typePaiement == TypePaiement.BONUS || typePaiement == TypePaiement.INDEMNITE) {
-                        System.out.print("Condition validée ? (O/N): ");
+                        System.out.print("Condition vallides => O/N):  ");
                         conditionValidee = scanner.nextLine().equalsIgnoreCase("O");
                     } else {
-                        conditionValidee = false;
+
+                         conditionValidee = false;
                     }
                     paiement.setConditionValidee(conditionValidee);
 

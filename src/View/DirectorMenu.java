@@ -39,6 +39,7 @@ public class DirectorMenu {
             System.out.println("4. get All Departements");
             System.out.println("5. create/Assign Responsible for a Department");
             System.out.println("6. add paiement to responsable ");
+            System.out.println("7. nombre total d'agents ");
 
             System.out.println("0. Quitter");
 
@@ -188,6 +189,9 @@ public class DirectorMenu {
 
                     break;
 
+                case 7:
+
+                    break;
 
                 case 0:
                     directorRun = false;

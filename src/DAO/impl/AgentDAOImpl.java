@@ -10,11 +10,16 @@ import Exception.DataAccessException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AgentDAOImpl implements IAgentDAO {
+    private static final Logger logger = Logger.getLogger(AgentDAOImpl.class.getName());
 
 
     public void addAgent(Agent agent) {
+        logger.info("Adding agent to DB: " + agent.getEmail());
+
         String sql = "INSERT INTO agent (name, prenom, email, motDePasse, typeAgent, departement_id) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
@@ -27,7 +32,10 @@ public class AgentDAOImpl implements IAgentDAO {
             ps.setInt(6, agent.getDepartement().getIdDepartement());
 
             ps.executeUpdate();
+            logger.info("Agent inserted successfully: " + agent.getEmail());
+
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Failed to add agent: " + agent.getEmail(), e);
             throw new DataAccessException("Failed to add agent", e);
         }
     }
@@ -63,6 +71,7 @@ public class AgentDAOImpl implements IAgentDAO {
             }
             return null;
         } catch (SQLException e) {
+
             throw new DataAccessException("Failed to fetch agent by email and password", e);
         }
 
