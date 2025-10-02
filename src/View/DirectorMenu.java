@@ -15,6 +15,7 @@ import Service.PaiementService;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class DirectorMenu {
@@ -40,6 +41,8 @@ public class DirectorMenu {
             System.out.println("5. create/Assign Responsible for a Department");
             System.out.println("6. add paiement to responsable ");
             System.out.println("7. nombre total d'agents ");
+            System.out.println("8. nombre total de departements ");
+
 
             System.out.println("0. Quitter");
 
@@ -190,6 +193,17 @@ public class DirectorMenu {
                     break;
 
                 case 7:
+
+                     AgentController agentController1 = new AgentController(new AgentService(new AgentRepositoryImpl(new AgentDAOImpl())));
+                    long nbrAgent=agentController1.getAllAgents().stream().count();
+
+                    System.out.println("nombre total  des agents "+ nbrAgent);
+                    break;
+
+                case 8:
+
+                    long nbrDepartement=controller.getAllDepartements().stream().count();
+                    System.out.println("nombre total  des departements  "+ nbrDepartement);
 
                     break;
 

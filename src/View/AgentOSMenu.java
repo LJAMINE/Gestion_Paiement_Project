@@ -28,8 +28,8 @@ public class AgentOSMenu {
             System.out.println("4. Calculer le total de mes paiements");
             System.out.println("5. filtrer les paiement by Type");
             System.out.println("6. biggest montant ");
-            System.out.println("7. sort by date  ");
-            System.out.println("8. sort by montant  ");
+            System.out.println("7. sort by date");
+            System.out.println("8. sort by montant ");
 
 
             System.out.println("0. Quitter");
@@ -73,17 +73,18 @@ public class AgentOSMenu {
                     break;
 
                 case 7:
-                    List<Paiement> paimentFiltrer=paiementController.getPaiementByAgent(currentUser.getIdAgent()).stream().sorted(Comparator.comparing(Paiement::getDate)).toList();
-                    System.out.println("les paiements filtres sont =>"+paimentFiltrer);
+                    List<Paiement> paimentFiltrer = paiementController.getPaiementByAgent(currentUser.getIdAgent()).stream().sorted(Comparator.comparing(Paiement::getDate)).toList();
+                    System.out.println("les paiements filtres sont =>" + paimentFiltrer);
                     break;
 
-                case 8 :
-                    List<Paiement> paimentsorted=paiementController.getPaiementByAgent(currentUser.getIdAgent()).stream().sorted(Comparator.comparing(Paiement::getMontant)).toList();
+                case 8:
+                    List<Paiement> paimentsorted = paiementController.getPaiementByAgent(currentUser.getIdAgent()).stream().sorted(Comparator.comparing(Paiement::getMontant)).toList();
                     System.out.println("Paiements sorted  par montant :");
                     paimentsorted.forEach(p ->
                             System.out.println(" - Montant: " + p.getMontant() +
                                     " | Date: " + p.getDate())
-                    );                    break;
+                    );
+                    break;
                 case 0:
                     run = false;
                     break;
