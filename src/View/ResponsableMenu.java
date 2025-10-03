@@ -35,6 +35,7 @@ public class ResponsableMenu {
             System.out.println("5. add paiement to an agent ");
             System.out.println("6. Afficher la moyenne des paiements pour agent");
             System.out.println("7. Afficher la total du paiements de ce departement");
+            System.out.println("8. Classement des agents par montant total reçu (du plus payé au moins payé).");
 
             System.out.println("0. Quitter");
 
@@ -282,6 +283,22 @@ public class ResponsableMenu {
                     System.out.println("Le total des paiements pour le departement est : "+currentUser.getDepartement().getNom()+" "+"total est "+ sums);
 
 
+
+                    break;
+                case 8:
+                    System.out.println("Classement des agents par montant total reçu (du plus payé au moins payé)");
+
+                    int idDepartements=currentUser.getDepartement().getIdDepartement();
+                    List<Agent>agentList=agentController.getAgentsByDepartement(idDepartements);
+
+                    System.out.println("-----------------");
+
+                    for (Agent agents : agentList){
+                        List<Paiement>laListePaiement=paiementController.getPaiementByAgent(agents.getIdAgent());
+                        double tot=laListePaiement.stream().mapToDouble(Paiement::getMontant).sum();
+
+                        System.out.println(tot);
+                    }
 
                     break;
                 case 0:
