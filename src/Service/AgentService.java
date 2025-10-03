@@ -58,4 +58,8 @@ public class AgentService {
         logger.info("Fetching agent by email: " + email);
         return agentRepository.getAgentByEmailAndPassword(email, password);
     }
+
+    public List<Agent> getAgentsByDepartement(int departementId) throws DataAccessException{
+        return agentRepository.getAgentsByDepartement(departementId);
+    }
 }

@@ -63,6 +63,16 @@ public class AgentController {
         }
     }
 
+    public List<Agent> getAgentsByDepartement(int departementId) throws DataAccessException{
+     try{
+         return agentService.getAgentsByDepartement(departementId);
+
+     } catch (DataAccessException e) {
+         System.out.println("error lors de authentification : " + e.getMessage());
+     }
+        return null;
+    }
+
 }
 
 

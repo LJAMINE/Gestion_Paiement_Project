@@ -7,7 +7,9 @@ import Model.Agent;
 import Model.Paiement;
 import Model.TypeAgent;
 import Model.TypePaiement;
+import Repository.impl.AgentRepositoryImpl;
 import Repository.impl.PaiementRepositoryImpl;
+import Service.AgentService;
 import Service.PaiementService;
 
 import java.time.LocalDate;
@@ -19,6 +21,7 @@ public class ResponsableMenu {
     public static void launch(Agent currentUser, AgentController controller)throws Exception{
         Scanner scanner = new Scanner(System.in);
         PaiementController paiementController =  new PaiementController(new PaiementService(new PaiementRepositoryImpl()));
+        AgentController agentController = new AgentController(new AgentService(new AgentRepositoryImpl(new AgentDAOImpl())));
         boolean agentRun = true;
 
         AgentDAOImpl agentDAO = new AgentDAOImpl();
@@ -31,6 +34,7 @@ public class ResponsableMenu {
             System.out.println("4. get All agent");
             System.out.println("5. add paiement to an agent ");
             System.out.println("6. Afficher la moyenne des paiements pour agent");
+            System.out.println("7. Afficher la total du paiements de ce departement");
 
             System.out.println("0. Quitter");
 
@@ -251,14 +255,32 @@ public class ResponsableMenu {
                     break;
 
                 case 6:
-
-
                     System.out.println("give the id of agent ");
                     int idAGENT=scanner.nextInt();
                      paiementController.getPaiementByAgent(idAGENT).stream().mapToDouble(Paiement::getMontant).average().ifPresentOrElse(
                         moyenne -> System.out.println("Moyenne des paiements : " + moyenne),
                         () -> System.out.println("Aucun paiement found  pour calculer la moyenne.")
                 );
+
+
+                    break;
+
+                case 7:
+                    System.out.println("total du paiements de ce departements ");
+                    int idDepartement=currentUser.getDepartement().getIdDepartement();
+                     List<Agent> listAgents =agentController.getAgentsByDepartement(idDepartement);
+
+                     double sums=0.0;
+
+                     for ( Agent agent1 : listAgents){
+                         List<Paiement>listPaiments=paiementController.getPaiementByAgent(agent1.getIdAgent());
+                         double totalArgent=listPaiments.stream().mapToDouble(Paiement::getMontant).sum();
+                         sums+=totalArgent;
+
+                     }
+
+                    System.out.println("Le total des paiements pour le departement est : "+currentUser.getDepartement().getNom()+" "+"total est "+ sums);
+
 
 
                     break;
